@@ -15,8 +15,6 @@ typedef struct{
     float largura;
 }Retangulo;
 
-
-
 int main(){
     Retangulo dados[5];
     float area[5];
