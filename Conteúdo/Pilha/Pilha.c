@@ -1,4 +1,4 @@
-/*Pilha -> Push*/
+/*Pilha*/
 
 #include<stdio.h>
 #include<stdlib.h>
