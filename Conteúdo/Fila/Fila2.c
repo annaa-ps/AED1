@@ -1,4 +1,4 @@
-/*Fila -> FIFO(First Int, Firts Out)*/
+/*Fila 2 -> FIFO(First Int, Firts Out)*/
 #include<stdlib.h>
 #include <stdio.h>
 
