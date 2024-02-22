@@ -21,7 +21,7 @@ void criar_fila(Fila *fila){
 }
 //Função para inserir um elemento na fila
 void inserir_na_fila(Fila *fila, int num){
-  No *aux, *novo = malloc(sizeof(No));
+  No *novo = malloc(sizeof(No));
   if(novo){
     novo->valor = num;
     novo->proximo = NULL;
