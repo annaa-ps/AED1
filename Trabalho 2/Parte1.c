@@ -43,3 +43,25 @@ void criarListaFuncionarios(ListaDadosFuncionarios *lista){
     lista->cabeca = NULL;
     lista->tam = 0; 
 }
+
+//Função para inserir um departamento
+void inserirDepartamento(ListaDepartamentos *lista, int codigo, char nomeDepartamento[50], float percentualBonificacao){
+    NoD *novoDepartamento = malloc(sizeof(NoD));
+    if(novoDepartamento){
+        novoDepartamento->codigo = codigo;
+        strcpy(novoDepartamento->nomeDepartamento, nomeDepartamento);
+        novoDepartamento->percentualBonificacao = percentualBonificacao;
+        novoDepartamento->proximo = lista->inicio;
+        lista->tam++;
+    }else{
+        printf("\nErro ao alocar memoria para o departamento!\n");
+    }
+}
+
+//Função para inserir um funcionário na lista
+void inserirdFuncionario(ListaDadosFuncionarios *lista, char nome[50], char cpf[12], int idade, float salarioBruto, char departamento){
+
+  
+}
+
+
