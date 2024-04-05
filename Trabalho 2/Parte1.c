@@ -59,9 +59,23 @@ void inserirDepartamento(ListaDepartamentos *lista, int codigo, char nomeDeparta
 }
 
 //Função para inserir um funcionário na lista
-void inserirdFuncionario(ListaDadosFuncionarios *lista, char nome[50], char cpf[12], int idade, float salarioBruto, char departamento){
-
-  
+void inserirdFuncionario(ListaDadosFuncionarios *lista, char nome[50], char cpf[12], int idade, float salarioBruto, char departamento[15]){
+    NoF *novoFuncionario = malloc(sizeof(NoF));
+    if(novoFuncionario){
+        strcpy(novoFuncionario->nome,nome);
+        strcpy(novoFuncionario->cpf, cpf);
+        novoFuncionario->idade = idade;
+        novoFuncionario->salarioBruto = salarioBruto;
+        strcpy(novoFuncionario->departamento, departamento);
+        novoFuncionario->proximo = lista->cabeca;
+        novoFuncionario->anterior = NULL;
+        if(lista->cabeca){
+            lista->cabeca->anterior = novoFuncionario;
+        }
+        lista->cabeca = novoFuncionario;
+        lista->tam++;
+    }else{
+        printf("\nErro ao alocar memoria para o funcionario!\n");
+    }
 }
-
 
