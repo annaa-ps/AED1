@@ -131,3 +131,42 @@ void inserirdFuncionario(ListaDadosFuncionarios *lista, char nome[50], char cpf[
     }
 }
 
+
+//Função para calcular o salário líquido de um funcionário
+float calcularSalario(ListaDadosFuncionarios *listaF, ListaDepartamentos *listaD, char cpg[12]){
+    NoF *funcionarioAtual = listaF->cabeca;
+    float salarioLiquido = 0;
+    int cpfCorrespondente = 1, i; 
+    int departamentoCorrespondente = 1;
+    
+    //Procurar o funcionário na lista de funcionários
+    while (funcionarioAtual != NULL){
+        for(i=0; i<11; i++){
+            if(funcionarioAtual->cpf[i]!= cpf[i]){
+                cpfCorrespondente = 0; 
+                break; 
+            }
+        }
+        if(cpfCorrespondente){
+            //Funcionário foi encontrado, agora tem que procurar o departamento 
+            NoD *departamentoAtual = listaD->inicio; 
+            while(departamentoAtual!=NULL){
+                for(i=0; i<50; i++){
+                    if(funcionarioAtual->departamento[i] != departamentoAtual->nomeDepartamento[i]){
+                        departamentoCorrespondente = 0; 
+                        break;
+                    }
+                }
+                if(departamentoCorrespondente){
+                    //Caucula o salário líquido com base no salário bruto e no percentual de bonificação do departamento
+                    salarioLiquido = funcionarioAtual->salarioBruto * (1 + departamentoAtual->percentualBonificacao / 100);
+                    return salarioLiquido;
+                }
+                departamentoAtual = departamentoAtual->proximo;
+            }
+        }
+        funcionarioAtual = funcionarioAtual->proximo;
+    }
+    //Retorna 0 se o funcionário não for encontrado ou se não houver departamento associado
+    return salarioLiquido; 
+}
