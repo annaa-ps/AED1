@@ -68,7 +68,6 @@ void inserirDepartamento(ListaDepartamentos *lista, int codigo, char nomeDeparta
         lista->fim = novoDepartamento;
     }
 }
-
 //Função para buscar departamento
 Departamento *buscarDepartamento(ListaDepartamentos *lista, int codigo) {
     Departamento *atual = lista->inicio;
@@ -94,7 +93,7 @@ void inserirFuncionario(ListaDadosFuncionarios *lista, ListaDepartamentos *lista
     novoFuncionario->anterior = NULL;
 
     //Encontrar o departamento correspondente
-    Departamento *departamento = buscarDepartamento(&listaDepartamentos, codigoDepartamento);
+    Departamento *departamento = buscarDepartamento(listaDepartamentos, codigoDepartamento);
     if(departamento == NULL){
         printf("\nDepartamento nao encontrado, portanto o funcionario nao sera inserido!\n");
         free(novoFuncionario);
