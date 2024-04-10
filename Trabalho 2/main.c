@@ -55,20 +55,11 @@ int main() {
                     printf("\nFuncionario nao encontrado ou lista vazia.\n");
                 }
                 break;
-
-
-            case 4:
-                printf("\nDigite o codigo do departamento para remover: ");
-                scanf("%d", &codigoDepartamento);
-                int resultadoRemocaoDep = removerDepartamento(&listaDepartamentos, &listaFuncionarios, codigoDepartamento);
-                if (resultadoRemocaoDep == SUCESSO) {
-                    printf("Departamento removido com sucesso.\n");
-                } else if (resultadoRemocaoDep == N_ENCOTRADO) {
-                    printf("Departamento nao encontrado.\n");
-                } else if (resultadoRemocaoDep == N_P_REMOVER) {
-                    printf("Remocao nao permitida, existem funcionarios associados a este departamento.\n");
-                }
-                break;
+           case 4:
+               printf("\nDigite o codigo do departamento para remover: ");
+               scanf("%d", &codigoDepartamento);
+               int resultadoRemocaoDep = removerDepartamento(&listaDepartamentos, &listaFuncionarios, codigoDepartamento);
+               break;
 
             case 5:
                 printf("\nDigite o CPF do funcionario para buscar: ");
