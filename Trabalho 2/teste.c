@@ -54,12 +54,20 @@ int validarCPF(char *cpf){
 
 //Função para inserir um departamento
 void inserirDepartamentoOrdenado(ListaDepartamentos *lista, int codigo, char nomeDepartamento[50], float percentualBonificacao) {
-    Departamento *novoDepartamento = (Departamento *)malloc(sizeof(Departamento));
-    if (novoDepartamento == NULL) {
-        printf("\nErro ao alocar memória para novo departamento!\n");
+    // Verificar se o departamento já existe na lista
+    if (buscarDepartamento(lista, codigo) != NULL) {
+        printf("\nErro: Departamento com codigo [%d] ja existe na lista de departamentos!\n", codigo);
         return;
     }
 
+    // Alocar memória para o novo departamento
+    Departamento *novoDepartamento = (Departamento *)malloc(sizeof(Departamento));
+    if (novoDepartamento == NULL) {
+        printf("Erro ao alocar memória para novo departamento.\n");
+        return;
+    }
+
+    // Preencher os dados do novo departamento
     novoDepartamento->codigo = codigo;
     strcpy(novoDepartamento->nomeDepartamento, nomeDepartamento);
     novoDepartamento->percentualBonificacao = percentualBonificacao;
@@ -70,7 +78,7 @@ void inserirDepartamentoOrdenado(ListaDepartamentos *lista, int codigo, char nom
         novoDepartamento->proximo = lista->inicio;
         lista->inicio = novoDepartamento;
         if (lista->fim == NULL) {
-            lista->fim = novoDepartamento; // Se a lista estava vazia, o novo departamento também é o último
+            lista->fim = novoDepartamento;
         }
         return;
     }
@@ -273,12 +281,28 @@ Funcionario* buscarFuncionario(ListaDadosFuncionarios *lista, char *cpf){
         }
         busca = busca->proximo; // Avança para o próximo funcionário na lista
     }
-    printf("\n---------------------------------------------");
-    printf("\nFuncionario com CPF:%s, nao encontrado!",cpf);
-    printf("\n---------------------------------------------");
     return NULL;
 }
 
+//Função para mostrar a lista de deparpatamentos
+void mostrarListaDepartamentos(ListaDepartamentos *lista){
+
+    Departamento *novo;
+    novo = lista->inicio;
+
+    if(lista->inicio == NULL){ //lista vazia
+        printf("\nNenhum departamento encontrado!\n");
+        return;
+    }else{
+        while(novo != NULL){
+            printf("Nome: %s", novo-> nomeDepartamento);
+            printf("Codigo: %d\n", novo->codigo);
+            printf("Bonificacao: %.2f\n\n", novo->percentualBonificacao);
+            novo = novo->proximo;
+        }
+
+    }
+}
 
 // Função para calcular o salário líquido de um funcionário
 float calcularSalarioLiquido(float salarioBruto, float percentualBonificacao) {
