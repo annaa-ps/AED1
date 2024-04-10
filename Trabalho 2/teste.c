@@ -159,8 +159,6 @@ void inserirFuncionario(ListaDadosFuncionarios *lista, ListaDepartamentos *lista
     printf("\nFuncionario inserido com sucesso!\n");
 }
 
-
-
 //Função para remover um departamento
 int removerDepartamento(ListaDepartamentos *lista, ListaDadosFuncionarios *listaFuncionarios, int codigo) {
     // Busca o departamento na lista
@@ -175,7 +173,7 @@ int removerDepartamento(ListaDepartamentos *lista, ListaDadosFuncionarios *lista
     Funcionario *funcionario = listaFuncionarios->cabeca;
     while (funcionario != NULL) {
         if (funcionario->codigoDepartamento == codigo) {
-            printf("O departamento possui funcionarios. Remoção nao permitida.\n");
+            printf("O departamento possui funcionarios. Remocao nao permitida.\n");
             return N_P_REMOVER;
         }
         funcionario = funcionario->proximo;
