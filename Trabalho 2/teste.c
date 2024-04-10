@@ -56,7 +56,7 @@ int validarCPF(char *cpf){
 void inserirDepartamentoOrdenado(ListaDepartamentos *lista, int codigo, char nomeDepartamento[50], float percentualBonificacao) {
     Departamento *novoDepartamento = (Departamento *)malloc(sizeof(Departamento));
     if (novoDepartamento == NULL) {
-        printf("Erro ao alocar memória para novo departamento.\n");
+        printf("\nErro ao alocar memória para novo departamento!\n");
         return;
     }
 
@@ -111,13 +111,15 @@ Departamento *buscarDepartamento(ListaDepartamentos *lista, int codigo) {
 void inserirFuncionario(ListaDadosFuncionarios *lista, ListaDepartamentos *listaDepartamentos, char nome[50], char cpf[12], int idade, float salarioBruto, int codigoDepartamento){
     // Validar o CPF
     if (!validarCPF(cpf)) {
-        printf("\nCPF invalido.\n");
+        printf("\nCPF invalido!\n");
         return;
     }
 
     // Verificar se o CPF já existe na lista de funcionários
     if (buscarFuncionario(lista, cpf) != NULL) {
-        printf("\nFuncionario com CPF %s ja existe na lista!\n", cpf);
+        printf("\n-----------------------------------------------------");
+        printf("\nFuncionario com CPF [%s] ja existe na lista!", cpf);
+        printf("\n-----------------------------------------------------");
         return;
     }
 
@@ -138,7 +140,9 @@ void inserirFuncionario(ListaDadosFuncionarios *lista, ListaDepartamentos *lista
     //Encontrar o departamento correspondente
     Departamento *departamento = buscarDepartamento(listaDepartamentos, codigoDepartamento);
     if(departamento == NULL){
-        printf("\nDepartamento nao encontrado, portanto o funcionario nao sera inserido!\n");
+        printf("\n------------------------------------------------------------------------");
+        printf("\nDepartamento nao encontrado, portanto o funcionario nao sera inserido!");
+        printf("\n------------------------------------------------------------------------");
         free(novoFuncionario);
         return;
     }
@@ -154,8 +158,9 @@ void inserirFuncionario(ListaDadosFuncionarios *lista, ListaDepartamentos *lista
         atual->proximo = novoFuncionario;
         novoFuncionario->anterior = atual;
     }
-
-    printf("\nFuncionario inserido com sucesso!\n");
+    printf("\n-----------------------------------");
+    printf("\nFuncionario inserido com sucesso!");
+    printf("\n-----------------------------------");
 }
 
 //Função para remover um departamento
@@ -164,7 +169,9 @@ int removerDepartamento(ListaDepartamentos *lista, ListaDadosFuncionarios *lista
     Departamento *departamento = buscarDepartamento(lista, codigo);
 
     if (departamento == NULL) {
-        printf("Departamento com codigo %d nao encontrado.\n", codigo);
+        printf("\n----------------------------------------------------");
+        printf("\nDepartamento com codigo [%d] nao encontrado.", codigo);
+        printf("\n----------------------------------------------------");
         return N_ENCOTRADO;
     }
 
@@ -172,7 +179,9 @@ int removerDepartamento(ListaDepartamentos *lista, ListaDadosFuncionarios *lista
     Funcionario *funcionario = listaFuncionarios->cabeca;
     while (funcionario != NULL) {
         if (funcionario->codigoDepartamento == codigo) {
-            printf("O departamento possui funcionarios. Remocao nao permitida.\n");
+            printf("\n-----------------------------------------------------------");
+            printf("\nO departamento possui funcionarios. Remocao nao permitida!");
+            printf("\n-----------------------------------------------------------");
             return N_P_REMOVER;
         }
         funcionario = funcionario->proximo;
@@ -199,11 +208,14 @@ int removerDepartamento(ListaDepartamentos *lista, ListaDadosFuncionarios *lista
         }
 
         free(atual);
-        printf("Departamento removido com sucesso.\n");
+        printf("\n----------------------------------");
+        printf("\nDepartamento removido com sucesso.");
+        printf("\n----------------------------------");
         return SUCESSO;
     }
-
-    printf("Erro ao remover o departamento.\n");
+    printf("\n-------------------------------");
+    printf("\nErro ao remover o departamento!");
+    printf("\n-------------------------------");
     return ERRO;
 }
 
@@ -221,7 +233,9 @@ Funcionario* removerFuncionario(ListaDadosFuncionarios *lista, char *cpf) {
             if(remove->proximo != NULL){
                 remove->proximo->anterior = remove->anterior;// Atualiza o anterior do próximo nó
             }
-            printf("\nFuncionario removido com sucesso:\n");
+            printf("\n-----------------------------------");
+            printf("\nFuncionario removido com sucesso:");
+            printf("\n-----------------------------------\n");
             printf("Nome: %s", remove->nome);
             printf("CPF: %s\n", remove->cpf);
             printf("Idade: %d\n", remove->idade);
@@ -238,7 +252,6 @@ Funcionario* removerFuncionario(ListaDadosFuncionarios *lista, char *cpf) {
     */
     return NULL;
 }
-
 
 //Função para buscar um funcionário
 Funcionario* buscarFuncionario(ListaDadosFuncionarios *lista, char *cpf){
@@ -260,8 +273,9 @@ Funcionario* buscarFuncionario(ListaDadosFuncionarios *lista, char *cpf){
         }
         busca = busca->proximo; // Avança para o próximo funcionário na lista
     }
-
-    printf("\nFuncionario com CPF:%s, nao encontrado!\n",cpf);
+    printf("\n---------------------------------------------");
+    printf("\nFuncionario com CPF:%s, nao encontrado!",cpf);
+    printf("\n---------------------------------------------");
     return NULL;
 }
 
