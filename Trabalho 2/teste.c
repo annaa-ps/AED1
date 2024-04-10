@@ -84,11 +84,29 @@ Departamento *buscarDepartamento(ListaDepartamentos *lista, int codigo) {
 
 // Função para inserir um funcionário na lista
 void inserirFuncionario(ListaDadosFuncionarios *lista, ListaDepartamentos *listaDepartamentos, char nome[50], char cpf[12], int idade, float salarioBruto, int codigoDepartamento){
+    // Validar o CPF
+    if (!validarCPF(cpf)) {
+        printf("CPF invalido.\n");
+        return;
+    }
+
+    // Verificar se o CPF já existe na lista de funcionários
+    if (buscarFuncionario(lista, cpf) != NULL) {
+        printf("Funcionario com CPF %s ja existe na lista.\n", cpf);
+        return;
+    }
+
     Funcionario *novoFuncionario = (Funcionario *)malloc(sizeof(Funcionario));
+    if (novoFuncionario == NULL) {
+        printf("Erro ao alocar memoria para novo funcionario.\n");
+        return;
+    }
+
     strcpy(novoFuncionario->nome, nome);
-    strcpy(novoFuncionario->cpf,cpf);
+    strcpy(novoFuncionario->cpf, cpf);
     novoFuncionario->idade = idade;
     novoFuncionario->salarioBruto = salarioBruto;
+    novoFuncionario->codigoDepartamento = codigoDepartamento;
     novoFuncionario->proximo = NULL;
     novoFuncionario->anterior = NULL;
 
@@ -100,6 +118,7 @@ void inserirFuncionario(ListaDadosFuncionarios *lista, ListaDepartamentos *lista
         return;
     }
 
+    // Inserir funcionário no final da lista
     if(lista->cabeca == NULL){
         lista->cabeca = novoFuncionario;
     }else{
