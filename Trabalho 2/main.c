@@ -29,7 +29,7 @@ int main() {
                 fgets(nome, 50, stdin);
                 printf("Digite o percentual de bonificacao do departamento: ");
                 scanf("%f", &percentualBonificacao);
-                 inserirDepartamento(&listaDepartamentos, codigoDepartamento, nome, percentualBonificacao);
+                inserirDepartamento(&listaDepartamentos, codigoDepartamento, nome, percentualBonificacao);
                 break;
             case 2:
                 printf("Digite o nome do funcionario: ");
@@ -52,7 +52,7 @@ int main() {
             case 4:
                 printf("Digite o codigo do departamento para remover: ");
                 scanf("%d", &codigoDepartamento);
-                removerDepartamento(&listaDepartamentos, codigoDepartamento);
+               removerDepartamento(&listaDepartamentos, &listaFuncionarios, codigoDepartamento);
                 break;
             case 5:
                 printf("Digite o CPF do funcionario para buscar: ");
@@ -65,7 +65,7 @@ int main() {
             case 7:
                 printf("Digite o codigo do departamento para listar os funcionarios: ");
                 scanf("%d", &codigoDepartamento);
-                //listarFuncionariosDepartamento(&listaFuncionarios, &listaDepartamentos, codigoDepartamento);
+                //ListarFuncionariosDepartamento(&listaFuncionarios, &listaDepartamentos, codigoDepartamento);
                 break;
             case 8:
                 //listarTodosFuncionarios(&listaFuncionarios, &listaDepartamentos);
