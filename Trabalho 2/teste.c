@@ -68,6 +68,7 @@ void inserirDepartamento(ListaDepartamentos *lista, int codigo, char nomeDeparta
         lista->fim = novoDepartamento;
     }
 }
+
 //Função para buscar departamento
 Departamento *buscarDepartamento(ListaDepartamentos *lista, int codigo) {
     Departamento *atual = lista->inicio;
@@ -86,19 +87,19 @@ Departamento *buscarDepartamento(ListaDepartamentos *lista, int codigo) {
 void inserirFuncionario(ListaDadosFuncionarios *lista, ListaDepartamentos *listaDepartamentos, char nome[50], char cpf[12], int idade, float salarioBruto, int codigoDepartamento){
     // Validar o CPF
     if (!validarCPF(cpf)) {
-        printf("CPF invalido.\n");
+        printf("\nCPF invalido.\n");
         return;
     }
 
     // Verificar se o CPF já existe na lista de funcionários
     if (buscarFuncionario(lista, cpf) != NULL) {
-        printf("Funcionario com CPF %s ja existe na lista.\n", cpf);
+        printf("\nFuncionario com CPF %s ja existe na lista!\n", cpf);
         return;
     }
 
     Funcionario *novoFuncionario = (Funcionario *)malloc(sizeof(Funcionario));
     if (novoFuncionario == NULL) {
-        printf("Erro ao alocar memoria para novo funcionario.\n");
+        printf("\nErro ao alocar memoria para novo funcionario!\n");
         return;
     }
 
@@ -129,115 +130,101 @@ void inserirFuncionario(ListaDadosFuncionarios *lista, ListaDepartamentos *lista
         atual->proximo = novoFuncionario;
         novoFuncionario->anterior = atual;
     }
+
+    printf("\nFuncionario inserido com sucesso!\n");
 }
 
-// Função para remover um funcionário da lista
-void removerFuncionario(ListaDadosFuncionarios *lista, char cpf[12]) {
-    Funcionario *atual = lista->cabeca;
-    Funcionario *anterior = NULL;
+//Função para remover um departamento
+int removerDepartamento(ListaDepartamentos *lista, ListaDadosFuncionarios *listaFuncionarios, int codigo) {
+    Departamento *aux = lista->inicio;
+    Departamento *remove = NULL;
 
-    while (atual != NULL) {
-        if (strcmp(atual->cpf, cpf) == 0) {
-            if (anterior == NULL) {
-                lista->cabeca = atual->proximo;
-                free(atual);
-                return;
+    // Encontrar o departamento com o código especificado
+    while (aux != NULL && aux->codigo != codigo) {
+        remove = aux;
+        aux = aux->proximo;
+    }
+
+    if (aux == NULL) return N_ENCOTRADO; // Departamento não encontrado, remoção não permitida
+
+    // Verificar se há funcionários associados a este departamento
+    Funcionario *funcionarioAtual = listaFuncionarios->cabeca;
+    while (funcionarioAtual != NULL) {
+        if (funcionarioAtual->codigoDepartamento == aux->codigo) {
+            return N_P_REMOVER; // Remoção não permitida se houver funcionários associados
+        }
+        funcionarioAtual = funcionarioAtual->proximo;
+    }
+
+    // Remover o departamento
+    if (remove == NULL) {
+        lista->inicio = aux->proximo;
+    } else {
+        remove->proximo = aux->proximo;
+    }
+
+    free(aux);
+    printf("Departamento removido com sucesso.\n");
+    return SUCESSO; // Remoção bem-sucedida
+}
+
+//Função para remover um funcionário
+int removerFuncionario(ListaDadosFuncionarios *lista,char *cpf) {
+    if(lista == NULL || lista->cabeca == NULL) return VAZIO;
+    Funcionario *remove = lista->cabeca;
+    while(remove != NULL ){
+        if(strcmp(remove->cpf,cpf) == 0){//Encontra o funcionario pelo cpf, uma vez encotrado,continua com a remoção
+            if(remove->anterior != NULL){
+                remove->anterior->proximo = remove->proximo; //Atualiza o próximo do nó anterior
             } else {
-                anterior->proximo = atual->proximo;
-                if (atual->proximo != NULL) {
-                    atual->proximo->anterior = anterior;
-                }
-                free(atual);
-                return;
+                lista->cabeca = remove->proximo; //é o primeiro da lista
             }
+            if(remove->proximo != NULL){
+                remove->proximo->anterior = remove->anterior;// Atualiza o anterior do próximo nó
+            }
+            free(remove);
+            return SUCESSO;
         }
-        anterior = atual;
-        atual = atual->proximo;
+        //Caminha para o proximo funcionario dentro da lista.
+        remove = remove->proximo;
     }
-
-    printf("\nFuncionario nao encontrado.\n");
+    /**
+     * @brief Se o funcionario dono do CPF não foi encontrado,irá retornar um erro.
+    */
+    return ERRO;
 }
 
-// Função para remover um departamento da lista
-void removerDepartamento(ListaDepartamentos *listaD, int codigo) {
-    Departamento *atual = listaD->inicio;
-    Departamento *anterior = NULL;
-
-    while (atual != NULL) {
-        if (atual->codigo == codigo) {
-            if (anterior == NULL) {
-                listaD->inicio = atual->proximo;
-                free(atual);
-                return;
-            } else {
-                anterior->proximo = atual->proximo;
-                free(atual);
-                return;
-            }
+//Função para buscar um funcionário
+Funcionario* buscarFuncionario(ListaDadosFuncionarios *lista, char *cpf){
+    if(lista == NULL || lista->cabeca == NULL){
+        printf("Lista Vazia\n");
+        return NULL;
+    }
+    Funcionario *busca = lista->cabeca;
+    while (busca != NULL) {
+        if (strcmp(busca->cpf, cpf) == 0) {
+            printf("\nInformacoes sobre o funcionario:\n");
+            printf("Nome: %s\n", busca->nome);
+            printf("CPF: %s\n", busca->cpf);
+            printf("Idade: %d\n", busca->idade);
+            printf("Departamento: %d\n", busca->codigoDepartamento);
+            printf("Salario Bruto: %.2f\n", busca->salarioBruto);
+            return busca; // Retorna o nó do funcionário encontrado
         }
-        anterior = atual;
-        atual = atual->proximo;
+        busca = busca->proximo; // Avança para o próximo funcionário na lista
     }
 
-    printf("\nDepartamento nao encontrado!\n");
-}
-
-// Função para buscar um funcionário pelo CPF e exibir suas informações
-Funcionario *buscarFuncionario(ListaDadosFuncionarios *lista, char cpf[12]) {
-    Funcionario *atual = lista->cabeca;
-
-    while (atual != NULL) {
-        if (strcmp(atual->cpf, cpf) == 0) {
-            printf("Nome: %s\n", atual->nome);
-            printf("CPF: %s\n", atual->cpf);
-            printf("Idade: %d\n", atual->idade);
-            printf("Salario Bruto: %.2f\n", atual->salarioBruto);
-            printf("Departamento: %d\n", atual->codigoDepartamento);
-            return atual;
-        }
-        atual = atual->proximo;
-    }
-
-    printf("\nFuncionario nao encontrado.\n");
+    printf("\nFuncionario com CPF:%s, nao encontrado!\n",cpf);
     return NULL;
 }
 
 // Função para calcular o salário líquido de um funcionário
 float calcularSalarioLiquido(float salarioBruto, float percentualBonificacao) {
-    return salarioBruto * (1 + percentualBonificacao / 100);
-}
+    // Calcular o valor do bônus/desconto
+    float bonificacao = salarioBruto * (percentualBonificacao / 100);
 
+    // Calcular o salário líquido
+    float salarioLiquido = salarioBruto + bonificacao;
 
-
-/*float calcularSalario(ListaDadosFuncionarios *listaF, ListaDepartamentos *listaD, char cpf[12]){
-    NoF *funcionarioAtual = listaF->cabeca;
-    float salarioLiquido = 0;
-    int funcionarioEncontrado = 0; // Variável para verificar se o funcionário foi encontrado
-
-    // Procurar o funcionário na lista de funcionários
-    while (funcionarioAtual != NULL){
-        if (strcmp(funcionarioAtual->cpf, cpf) == 0) { // Comparação de strings corrigida
-            funcionarioEncontrado = 1; // Marcar que o funcionário foi encontrado
-            // Funcionário foi encontrado, agora temos que procurar o departamento
-            NoD *departamentoAtual = listaD->inicio;
-            while (departamentoAtual != NULL){
-                if (strcmp(funcionarioAtual->departamento, departamentoAtual->nomeDepartamento) == 0) { // Comparação de strings corrigida
-                    // Calcular o salário líquido com base no salário bruto e no percentual de bonificação do departamento
-                    salarioLiquido = funcionarioAtual->salarioBruto * (1 + departamentoAtual->percentualBonificacao / 100);
-                    return salarioLiquido;
-                }
-                departamentoAtual = departamentoAtual->proximo;
-            }
-            // Se chegou aqui, significa que o departamento não foi encontrado
-            printf("Departamento do funcionario nao encontrado.\n");
-            return salarioLiquido;
-        }
-        funcionarioAtual = funcionarioAtual->proximo;
-    }
-    // Se chegou aqui, significa que o funcionário não foi encontrado
-    if (!funcionarioEncontrado) {
-        printf("Funcionario com CPF %s nao encontrado.\n", cpf);
-    }
     return salarioLiquido;
-}*/
-
+}
