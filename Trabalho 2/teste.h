@@ -44,19 +44,21 @@ typedef struct {
 
 //DEPARTAMENTO
 void criarListaDepartamentos(ListaDepartamentos *lista);
-void inserirDepartamento(ListaDepartamentos *lista, int codigo, char nomeDepartamento[50], float percentualBonificacao);
+void inserirDepartamentoOrdenado(ListaDepartamentos *lista, int codigo, char nomeDepartamento[50], float percentualBonificacao);
 int removerDepartamento(ListaDepartamentos *lista, ListaDadosFuncionarios *listaFuncionarios, int codigo);
 Departamento *buscarDepartamento(ListaDepartamentos *lista, int codigo);
 
 //FUNCIONARIO
 void criarListaFuncionarios(ListaDadosFuncionarios *lista);
 void inserirFuncionario(ListaDadosFuncionarios *lista, ListaDepartamentos *listaDepartamentos, char nome[50], char cpf[12], int idade, float salarioBruto, int codigoDepartamento);
-int removerFuncionario(ListaDadosFuncionarios *lista,char *cpf);
+Funcionario* removerFuncionario(ListaDadosFuncionarios *lista, char *cpf);
 Funcionario* buscarFuncionario(ListaDadosFuncionarios *lista, char *cpf);
 
 
 //EXTRAS
 int validarCPF(char *cpf);
 float calcularSalarioLiquido(float salarioBruto, float percentualBonificacao);
+void inserirDepartamentoOrdenado(ListaDepartamentos *lista, int codigo, char nomeDepartamento[50], float percentualBonificacao);
+
 
 #endif // TESTE_H_INCLUDED
