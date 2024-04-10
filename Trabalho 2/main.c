@@ -49,11 +49,6 @@ int main() {
                 printf("\nDigite o CPF do funcionario para remover: "  );
                 fgets(cpf, 12, stdin);
                 Funcionario *funcionarioRemovido = removerFuncionario(&listaFuncionarios, cpf);
-                if (funcionarioRemovido != NULL) {
-                    printf("\nFuncionario removido com sucesso.\n");
-                } else {
-                    printf("\nFuncionario nao encontrado ou lista vazia.\n");
-                }
                 break;
            case 4:
                printf("\nDigite o codigo do departamento para remover: ");
@@ -78,7 +73,7 @@ int main() {
                 //listarTodosFuncionarios(&listaFuncionarios, &listaDepartamentos);
                 break;
             case 9:
-                printf("Digite o CPF do funcionario para calcular o salario liquido: ");
+                printf("\nDigite o CPF do funcionario para calcular o salario liquido: ");
                 fgets(cpf, 12, stdin);
                 Funcionario *funcionario = buscarFuncionario(&listaFuncionarios, cpf);
                 if (funcionario != NULL) {
