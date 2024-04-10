@@ -62,10 +62,13 @@ int main() {
                 buscarFuncionario(&listaFuncionarios, cpf);
                 break;
             case 6:
-                //listarDepartamentos(&listaDepartamentos);
+                printf("\n----------------------------------");
+                printf("\nLista de departamentos:");
+                printf("\n----------------------------------\n");
+                mostrarListaDepartamentos(&listaDepartamentos);
                 break;
             case 7:
-                printf("Digite o codigo do departamento para listar os funcionarios: ");
+                printf("\,Digite o codigo do departamento para listar os funcionarios: ");
                 scanf("%d", &codigoDepartamento);
                 //ListarFuncionariosDepartamento(&listaFuncionarios, &listaDepartamentos, codigoDepartamento);
                 break;
