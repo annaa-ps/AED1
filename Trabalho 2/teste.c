@@ -107,7 +107,6 @@ Departamento *buscarDepartamento(ListaDepartamentos *lista, int codigo) {
     return NULL;
 }
 
-
 // Função para inserir um funcionário na lista
 void inserirFuncionario(ListaDadosFuncionarios *lista, ListaDepartamentos *listaDepartamentos, char nome[50], char cpf[12], int idade, float salarioBruto, int codigoDepartamento){
     // Validar o CPF
@@ -244,7 +243,6 @@ Funcionario* removerFuncionario(ListaDadosFuncionarios *lista, char *cpf) {
 //Função para buscar um funcionário
 Funcionario* buscarFuncionario(ListaDadosFuncionarios *lista, char *cpf){
     if(lista == NULL || lista->cabeca == NULL){
-        printf("Lista Vazia\n");
         return NULL;
     }
     Funcionario *busca = lista->cabeca;
@@ -252,7 +250,7 @@ Funcionario* buscarFuncionario(ListaDadosFuncionarios *lista, char *cpf){
         if (strcmp(busca->cpf, cpf) == 0) {
             printf("\n-------------------------------------------------------------");
             printf("\nInformacoes sobre o funcionario:");
-             printf("\n-------------------------------------------------------------\n");
+            printf("\n-------------------------------------------------------------\n");
             printf("Nome: %s", busca->nome);
             printf("CPF: %s\n", busca->cpf);
             printf("Idade: %d\n", busca->idade);
@@ -266,6 +264,7 @@ Funcionario* buscarFuncionario(ListaDadosFuncionarios *lista, char *cpf){
     printf("\nFuncionario com CPF:%s, nao encontrado!\n",cpf);
     return NULL;
 }
+
 
 // Função para calcular o salário líquido de um funcionário
 float calcularSalarioLiquido(float salarioBruto, float percentualBonificacao) {
